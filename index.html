@@ -1,512 +1,353 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Educational Tools | Professor X Mode</title>
-    <meta name="description" content="Collection of educational tools and resources by Professor X Mode">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --menu-bg: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59);
-            --btn-1: linear-gradient(45deg, #ff00cc, #3333ff);
-            --btn-2: linear-gradient(45deg, #00dbde, #fc00ff);
-            --btn-3: linear-gradient(45deg, #f7ff00, #db36a4);
-            --btn-4: linear-gradient(45deg, #ff4e50, #f9d423);
-            --btn-5: linear-gradient(45deg, #00c9ff, #92fe9d);
-            --btn-6: linear-gradient(45deg, #fc466b, #3f5efb);
-            --btn-yt: linear-gradient(45deg, #FF0000, #E62117);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
-            min-height: 100vh;
-            background: #0f0f1a;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
-            touch-action: manipulation;
-        }
-        
-        /* Cyan Digital Clock with Date */
-        .digital-clock {
-            font-family: 'Orbitron', sans-serif;
-            color: #0ff; /* Cyan color */
-            text-shadow: 0 0 10px #0ff;
-            font-size: 24px;
-            text-align: center;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid #0ff;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #0ff;
-            letter-spacing: 2px;
-            margin: 20px auto;
-        }
-        
-        .channel-promo {
-            text-align: center;
-            margin: 12px 0;
-            color: white;
-            font-size: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .channel-name {
-            color: #FF0000;
-            font-weight: bold;
-            font-size: 20px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        
-        .menu-bar {
-            background: var(--menu-bg);
-            padding: 12px 0;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 10;
-            margin-bottom: 12px;
-            background-size: 400% 400%;
-            animation: menuGlow 8s infinite alternate;
-        }
-        
-        @keyframes menuGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .menu-items {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            align-items: center;
-        }
-        
-        .menu-item {
-            color: white;
-            font-weight: 700;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            cursor: pointer;
-            padding: 4px 6px;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .menu-item:hover {
-            transform: translateY(-2px);
-            text-shadow: 0 3px 8px rgba(0,0,0,0.5);
-        }
-        
-        .menu-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: white;
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-        
-        .menu-item:hover::after {
-            width: 100%;
-        }
-        
-        .subscribe-btn {
-            background: var(--btn-yt);
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 700;
-            font-size: 12px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            margin-left: 12px;
-        }
-        
-        .subscribe-btn:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
-        }
-        
-        .subscribe-icon {
-            font-size: 14px;
-        }
-        
-        .button-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            padding: 0 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
-        }
-        
-        .fancy-btn {
-            position: relative;
-            padding: 10px 6px;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            letter-spacing: 0.5px;
-            z-index: 1;
-            height: 100px;
-            width: 160px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            margin: 0 auto;
-        }
-        
-        .fancy-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-        
-        .fancy-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            transition: 0.3s;
-            opacity: 0.9;
-        }
-        
-        .fancy-btn:hover::before {
-            opacity: 1;
-            filter: brightness(1.1);
-        }
-        
-        .fancy-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: 0.5s;
-        }
-        
-        .fancy-btn:hover::after {
-            left: 100%;
-        }
-        
-        .btn-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            transition: all 0.2s ease;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
-        }
-        
-        .fancy-btn:hover .btn-icon {
-            transform: scale(1.1);
-        }
-        
-        .btn-1::before { background: var(--btn-1); }
-        .btn-2::before { background: var(--btn-2); }
-        .btn-3::before { background: var(--btn-3); }
-        .btn-4::before { background: var(--btn-4); }
-        .btn-5::before { background: var(--btn-5); }
-        .btn-6::before { background: var(--btn-6); }
-        
-        /* Heartbeat animation for buttons */
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            25% { transform: scale(1.05); }
-            50% { transform: scale(1); }
-            75% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-        
-        .fancy-btn {
-            animation: heartbeat 2s ease-in-out infinite;
-        }
-        
-        .btn-1 { animation-delay: 0s; }
-        .btn-2 { animation-delay: 0.2s; }
-        .btn-3 { animation-delay: 0.4s; }
-        .btn-4 { animation-delay: 0.6s; }
-        .btn-5 { animation-delay: 0.8s; }
-        .btn-6 { animation-delay: 1s; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Educational Tools by Professor X Mode - Collection of useful digital tools">
+  <title>Educational Tools | Professor X Mode</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #0ff;
+      --secondary-color: #FF0000;
+      --text-color: black; /* Changed from white to black */
+      --bg-dark: rgba(0, 0, 0, 0.7);
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background-image: url('https://i.postimg.cc/6qtvMLMW/Picsart-25-07-25-13-39-40-241.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      color: var(--text-color);
+    }
 
-        /* Chat Icon */
-        .chat-icon {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background: #FF0000;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        
-        .chat-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-        }
-        
-        /* Heart Rain */
-        .heart {
-            position: fixed;
-            pointer-events: none;
-            animation: fall linear forwards;
-            color: #ff0000;
-            font-size: 20px;
-            opacity: 0;
-            z-index: -1;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-        
-        .footer {
-            background: #000;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-        
-        .footer a {
-            color: #FF0000;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .developer-name {
-            color: #FF0000;
-            font-weight: bold;
-            margin-top: 3px;
-            font-size: 12px;
-        }
+    .digital-clock {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color);
+      font-size: 24px;
+      text-align: center;
+      padding: 15px;
+      background-color: var(--bg-dark);
+      border: 2px solid var(--primary-color);
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px var(--primary-color);
+      margin: 20px auto;
+    }
 
-        @media (max-width: 768px) {
-            .digital-clock {
-                font-size: 18px;
-                width: 90%;
-            }
-            
-            .menu-items {
-                gap: 10px;
-                flex-wrap: wrap;
-                padding: 0 6px;
-            }
-            
-            .menu-item {
-                font-size: 12px;
-                padding: 3px;
-                letter-spacing: 0.5px;
-            }
-            
-            .subscribe-btn {
-                padding: 5px 10px;
-                font-size: 11px;
-                margin-left: 0;
-                order: -1;
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .button-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 0 12px;
-            }
-            
-            .fancy-btn {
-                height: 90px;
-                width: 140px;
-                padding: 8px 4px;
-                font-size: 11px;
-            }
-            
-            .btn-icon {
-                font-size: 20px;
-                margin-bottom: 6px;
-            }
-            
-            .chat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-                right: 15px;
-                bottom: 15px;
-            }
-            
-            .footer {
-                font-size: 10px;
-                padding: 6px 3px;
-            }
-            
-            .developer-name {
-                font-size: 11px;
-            }
-        }
-    </style>
+    .menu-bar {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      padding: 12px 0;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 10;
+      margin-bottom: 12px;
+    }
+
+    .menu-items {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .menu-item {
+      color: var(--text-color);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      text-shadow: 0 0 5px rgba(255,255,255,0.7); /* Added text shadow */
+    }
+
+    .menu-item:hover {
+      color: var(--primary-color);
+    }
+
+    .subscribe-btn {
+      background: linear-gradient(45deg, #FF0000, #E62117);
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4); /* Enhanced shadow */
+      transition: all 0.3s;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      border: none;
+    }
+
+    .subscribe-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5); /* Enhanced hover shadow */
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      flex: 1;
+    }
+
+    .fancy-btn {
+      position: relative;
+      padding: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque */
+      color: var(--text-color);
+      font-weight: bold;
+      font-size: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 100px;
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      backdrop-filter: blur(2px); /* Added blur effect */
+      text-shadow: 0 1px 3px rgba(255,255,255,0.7); /* White text shadow for better visibility */
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3); /* Enhanced shadow */
+      transition: all 0.3s ease;
+    }
+
+    .fancy-btn:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.4);
+      border-color: var(--primary-color);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4); /* Enhanced hover shadow */
+    }
+
+    .btn-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+      transition: transform 0.3s;
+      color: var(--text-color);
+      text-shadow: 0 0 5px rgba(255,255,255,0.7); /* Icon shadow */
+    }
+
+    .fancy-btn:hover .btn-icon {
+      transform: scale(1.2);
+    }
+
+    .chat-icon {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: var(--secondary-color);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5); /* Enhanced shadow */
+      z-index: 100;
+      transition: all 0.3s;
+      background-image: url('https://i.postimg.cc/7hB5sVPB/IMG-20250725-210526.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .chat-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(255,0,0,0.6); /* Enhanced hover shadow */
+    }
+
+    .chat-icon i {
+      display: none;
+    }
+
+    .footer {
+      background: #000;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 12px;
+      margin-top: auto;
+    }
+
+    .footer a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    .developer-name {
+      color: var(--secondary-color);
+      font-weight: bold;
+      margin-top: 3px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .digital-clock {
+        font-size: 18px;
+        padding: 10px;
+      }
+      
+      .menu-items {
+        gap: 10px;
+      }
+      
+      .menu-item {
+        font-size: 12px;
+      }
+      
+      .subscribe-btn {
+        font-size: 11px;
+        padding: 5px 10px;
+      }
+      
+      .button-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+      }
+      
+      .fancy-btn {
+        width: 100%;
+        height: 90px;
+        font-size: 12px;
+      }
+      
+      .chat-icon {
+        width: 50px;
+        height: 50px;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Cyan Digital Clock with Date -->
-    <div class="digital-clock" id="digitalClock"></div>
-    
-    <div class="menu-bar">
-        <div class="menu-items">
-            <div class="menu-item">HOME</div>
-            <div class="menu-item">ABOUT</div>
-            <div class="menu-item">CONTACT</div>
-            <div class="subscribe-btn" onclick="window.open('https://youtube.com/@professorx42?si=o39CWKVArDn1cu1h', '_blank')">
-                <i class="fab fa-youtube subscribe-icon"></i>
-                SUBSCRIBE
-            </div>
-        </div>
-    </div>
-    
-    <div class="button-container">
-        <button class="fancy-btn btn-1" onclick="window.open('https://minahilsimdata.online/bulksearch.php', '_blank')">
-            <i class="fas fa-sim-card btn-icon"></i>
-            <span>SIM DATA</span>
-        </button>
-        <button class="fancy-btn btn-2" onclick="window.open('https://professor-x7878.github.io/cnic-generator/', '_blank')">
-            <i class="fas fa-id-card btn-icon"></i>
-            <span>FAKE CNIC</span>
-        </button>
-        <button class="fancy-btn btn-3" onclick="window.open('YOUR_MOBILE_RESTORE_LINK', '_blank')">
-            <i class="fas fa-mobile-alt btn-icon"></i>
-            <span>MOBILE RESTORE</span>
-        </button>
-        <button class="fancy-btn btn-4" onclick="window.open('https://nadradata.xyz/app/sim.php', '_blank')">
-            <i class="fas fa-id-card btn-icon"></i>
-            <span>CNIC INFORMATION</span>
-        </button>
-        <button class="fancy-btn btn-5" onclick="window.open('https://nadradata.xyz/app/sim.php', '_blank')">
-            <i class="fas fa-building btn-icon"></i>
-            <span>JAZZ FRANCHISE DATA</span>
-        </button>
-        <button class="fancy-btn btn-6" onclick="window.open('YOUR_TOOL6_LINK', '_blank')">
-            <i class="fas fa-wrench btn-icon"></i>
-            <span>TOOL 6</span>
-        </button>
-    </div>
+  <!-- Rest of your HTML content remains the same -->
+  <div class="digital-clock" id="digitalClock"></div>
 
-    <!-- Chat Icon with WhatsApp Link -->
-    <a href="https://wa.me/YOUR_PHONE_NUMBER" class="chat-icon" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <div class="footer">
-        <div>Copyright © 2023 Professor X Mode. All Rights Reserved.</div>
-        <div class="developer-name">Developed with ❤️ by PRINCE KHAN</div>
+  <div class="menu-bar">
+    <div class="menu-items">
+      <div class="menu-item" onclick="scrollToTop()">HOME</div>
+      <div class="menu-item" onclick="alert('About section coming soon')">ABOUT</div>
+      <div class="menu-item" onclick="alert('Contact information coming soon')">CONTACT</div>
+      <div class="subscribe-btn" onclick="window.open('https://youtube.com/@professorx42?si=o39CWKVArDn1cu1h', '_blank')">
+        <i class="fab fa-youtube subscribe-icon"></i> SUBSCRIBE
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Digital Clock and Date Function
-        function updateDateTime() {
-            const now = new Date();
-            
-            // Time components
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            
-            // Date components
-            const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-            
-            const dayName = days[now.getDay()];
-            const monthName = months[now.getMonth()];
-            const date = now.getDate().toString().padStart(2, '0');
-            const year = now.getFullYear();
-            
-            // Display in one line with cyan color
-            document.getElementById('digitalClock').textContent = 
-                `${hours}:${minutes}:${seconds} | ${dayName} ${monthName} ${date} ${year}`;
-            
-            // Randomly change the intensity for hacker effect
-            if(Math.random() > 0.95) {
-                const intensity = Math.floor(Math.random() * 3) + 1;
-                document.getElementById('digitalClock').style.textShadow = `0 0 ${5 * intensity}px #0ff`;
-                document.getElementById('digitalClock').style.boxShadow = `0 0 ${10 * intensity}px #0ff`;
-            }
-        }
-        
-        setInterval(updateDateTime, 1000);
-        updateDateTime(); // Initial call
-        
-        // Heart Rain Effect - Starts after 5 seconds
-        setTimeout(function() {
-            function createHeart() {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-                heart.style.opacity = Math.random();
-                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-                heart.style.top = '-20px';
-                
-                document.body.appendChild(heart);
-                
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000);
-            }
-            
-            const heartInterval = setInterval(createHeart, 100);
-            
-            // Stop after 30 seconds
-            setTimeout(() => {
-                clearInterval(heartInterval);
-            }, 30000);
-        }, 5000); // Starts after 5 seconds
-    </script>
+  <div class="button-container">
+    <button class="fancy-btn" onclick="window.open('https://minahilsimdata.online/bulksearch.php', '_blank')" 
+            title="Check SIM card information" aria-label="SIM Data Information">
+      <i class="fas fa-sim-card btn-icon"></i>
+      <span>SIM DATA</span>
+    </button>
+    <button class="fancy-btn" onclick="window.open('https://professor-x7878.github.io/cnic-generator/', '_blank')" 
+            title="Generate fake CNIC for testing" aria-label="Fake CNIC Generator">
+      <i class="fas fa-id-card btn-icon"></i>
+      <span>FAKE CNIC</span>
+    </button>
+    <button class="fancy-btn" onclick="alert('Mobile restore feature coming soon')" 
+            title="Mobile device restore tools" aria-label="Mobile Restore Tools">
+      <i class="fas fa-mobile-alt btn-icon"></i>
+      <span>MOBILE RESTORE</span>
+    </button>
+    <button class="fancy-btn" onclick="window.open('https://nadradata.xyz/app/sim.php', '_blank')" 
+            title="CNIC information lookup" aria-label="CNIC Information">
+      <i class="fas fa-id-card btn-icon"></i>
+      <span>CNIC INFO</span>
+    </button>
+    <button class="fancy-btn" onclick="window.open('https://nadradata.xyz/app/sim.php', '_blank')" 
+            title="Jazz franchise information" aria-label="Jazz Franchise Info">
+      <i class="fas fa-building btn-icon"></i>
+      <span>JAZZ FRANCHISE</span>
+    </button>
+    <button class="fancy-btn" onclick="alert('New tool coming soon')" 
+            title="Additional tool coming soon" aria-label="Coming Soon Tool">
+      <i class="fas fa-wrench btn-icon"></i>
+      <span>TOOL 6</span>
+    </button>
+  </div>
+
+  <a href="https://wa.me/923311212362" class="chat-icon" target="_blank" rel="noopener noreferrer" 
+     aria-label="Contact via WhatsApp" title="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <div class="footer">
+    <div>Copyright © 2023 Professor X Mode. All Rights Reserved.</div>
+    <div class="developer-name">Developed with ❤️ by PRINCE KHAN</div>
+  </div>
+
+  <script>
+    // Digital Clock Function
+    function updateDateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      const dayName = days[now.getDay()];
+      const monthName = months[now.getMonth()];
+      const date = now.getDate().toString().padStart(2, '0');
+      const year = now.getFullYear();
+      document.getElementById('digitalClock').textContent =
+        `${hours}:${minutes}:${seconds} | ${dayName} ${monthName} ${date} ${year}`;
+    }
+
+    // Scroll to top function
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Initialize clock and update every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Add loading effect to buttons
+    document.querySelectorAll('.fancy-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        setTimeout(() => {
+          this.innerHTML = `<i class="${this.querySelector('i').className.replace('fa-spinner fa-spin', this.dataset.originalIcon)}"></i> <span>${this.querySelector('span').textContent}</span>`;
+        }, 1500);
+      });
+      
+      // Store original icon class
+      button.dataset.originalIcon = button.querySelector('i').className.replace('btn-icon', '').trim();
+    });
+  </script>
 </body>
 </html>
