@@ -1,353 +1,746 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Educational Tools by Professor X Mode - Collection of useful digital tools">
-  <title>Educational Tools | Professor X Mode</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    :root {
-      --primary-color: #0ff;
-      --secondary-color: #FF0000;
-      --text-color: black; /* Changed from white to black */
-      --bg-dark: rgba(0, 0, 0, 0.7);
-    }
-    
-    body {
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-      background-image: url('https://i.postimg.cc/6qtvMLMW/Picsart-25-07-25-13-39-40-241.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      color: var(--text-color);
-    }
-
-    .digital-clock {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--primary-color);
-      text-shadow: 0 0 10px var(--primary-color);
-      font-size: 24px;
-      text-align: center;
-      padding: 15px;
-      background-color: var(--bg-dark);
-      border: 2px solid var(--primary-color);
-      width: 90%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px var(--primary-color);
-      margin: 20px auto;
-    }
-
-    .menu-bar {
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(2px);
-      padding: 12px 0;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      position: relative;
-      z-index: 10;
-      margin-bottom: 12px;
-    }
-
-    .menu-items {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .menu-item {
-      color: var(--text-color);
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-      text-shadow: 0 0 5px rgba(255,255,255,0.7); /* Added text shadow */
-    }
-
-    .menu-item:hover {
-      color: var(--primary-color);
-    }
-
-    .subscribe-btn {
-      background: linear-gradient(45deg, #FF0000, #E62117);
-      padding: 6px 12px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4); /* Enhanced shadow */
-      transition: all 0.3s;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      border: none;
-    }
-
-    .subscribe-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5); /* Enhanced hover shadow */
-    }
-
-    .button-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      padding: 20px;
-      width: 100%;
-      max-width: 1000px;
-      margin: auto;
-      flex: 1;
-    }
-
-    .fancy-btn {
-      position: relative;
-      padding: 10px;
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque */
-      color: var(--text-color);
-      font-weight: bold;
-      font-size: 13px;
-      border-radius: 6px;
-      cursor: pointer;
-      height: 100px;
-      width: 160px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      backdrop-filter: blur(2px); /* Added blur effect */
-      text-shadow: 0 1px 3px rgba(255,255,255,0.7); /* White text shadow for better visibility */
-      box-shadow: 0 8px 15px rgba(0,0,0,0.3); /* Enhanced shadow */
-      transition: all 0.3s ease;
-    }
-
-    .fancy-btn:hover {
-      transform: scale(1.05);
-      background-color: rgba(255, 255, 255, 0.4);
-      border-color: var(--primary-color);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4); /* Enhanced hover shadow */
-    }
-
-    .btn-icon {
-      font-size: 24px;
-      margin-bottom: 8px;
-      transition: transform 0.3s;
-      color: var(--text-color);
-      text-shadow: 0 0 5px rgba(255,255,255,0.7); /* Icon shadow */
-    }
-
-    .fancy-btn:hover .btn-icon {
-      transform: scale(1.2);
-    }
-
-    .chat-icon {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: var(--secondary-color);
-      color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5); /* Enhanced shadow */
-      z-index: 100;
-      transition: all 0.3s;
-      background-image: url('https://i.postimg.cc/7hB5sVPB/IMG-20250725-210526.png');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .chat-icon:hover {
-      transform: scale(1.1);
-      box-shadow: 0 8px 20px rgba(255,0,0,0.6); /* Enhanced hover shadow */
-    }
-
-    .chat-icon i {
-      display: none;
-    }
-
-    .footer {
-      background: #000;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 12px;
-      margin-top: auto;
-    }
-
-    .footer a {
-      color: var(--secondary-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .footer a:hover {
-      color: var(--primary-color);
-      text-decoration: underline;
-    }
-
-    .developer-name {
-      color: var(--secondary-color);
-      font-weight: bold;
-      margin-top: 3px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 600px) {
-      .digital-clock {
-        font-size: 18px;
-        padding: 10px;
-      }
-      
-      .menu-items {
-        gap: 10px;
-      }
-      
-      .menu-item {
-        font-size: 12px;
-      }
-      
-      .subscribe-btn {
-        font-size: 11px;
-        padding: 5px 10px;
-      }
-      
-      .button-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 10px;
-      }
-      
-      .fancy-btn {
-        width: 100%;
-        height: 90px;
-        font-size: 12px;
-      }
-      
-      .chat-icon {
-        width: 50px;
-        height: 50px;
-        right: 15px;
-        bottom: 15px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor X Mode - Hacker Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --hacker-green: #0f0;
+            --hacker-red: #f00;
+            --dark-bg: #000;
+            --glow-effect: 0 0 10px #0f0;
+        }
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--dark-bg);
+            color: var(--hacker-green);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Matrix Rain Background */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--hacker-green);
+            box-shadow: var(--glow-effect);
+            position: relative;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid var(--hacker-green);
+            border-radius: 5px;
+            animation: border-pulse 4s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes border-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: var(--glow-effect);
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin: 10px 0 0;
+            color: #aaa;
+        }
+        
+        /* Time Display */
+        .time-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .time, .date {
+            background: rgba(0, 20, 0, 0.3);
+            padding: 15px 25px;
+            border: 1px solid var(--hacker-green);
+            border-radius: 5px;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2), 0 0 15px rgba(0, 255, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(0, 255, 0, 0) 0%,
+                rgba(0, 255, 0, 0) 45%,
+                rgba(0, 255, 0, 0.3) 50%,
+                rgba(0, 255, 0, 0) 55%,
+                rgba(0, 255, 0, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: scanline 5s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%) rotate(30deg); }
+            100% { transform: translateY(100%) rotate(30deg); }
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tool-card {
+            background: rgba(0, 10, 0, 0.2);
+            border: 1px solid var(--hacker-green);
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
+            background: rgba(0, 30, 0, 0.3);
+        }
+        
+        .tool-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 0, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .tool-card:hover::before {
+            left: 100%;
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--hacker-green);
+            text-shadow: var(--glow-effect);
+            transition: all 0.3s;
+        }
+        
+        .loading-spinner {
+            display: none;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            animation: spin 1s linear infinite;
+            color: var(--hacker-green);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tool-card.loading .tool-icon {
+            display: none;
+        }
+        
+        .tool-card.loading .loading-spinner {
+            display: block;
+        }
+        
+        .tool-card.loading .tool-name {
+            color: #aaa;
+        }
+        
+        .tool-name {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        
+        .tool-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* WhatsApp Popup */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .whatsapp-popup {
+            background: linear-gradient(135deg, #075e54 0%, #128c7e 50%, #25d366 100%);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: popup-entrance 0.4s ease-out;
+        }
+        
+        @keyframes popup-entrance {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .popup-header {
+            padding: 25px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .popup-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .whatsapp-icon {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            animation: icon-pulse 2s infinite;
+        }
+        
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .popup-title {
+            font-size: 1.8rem;
+            margin: 0;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .popup-body {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .popup-message {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 25px;
+            min-height: 60px;
+        }
+        
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .popup-btn {
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(to right, #25d366, #128c7e);
+            color: white;
+        }
+        
+        .youtube-btn {
+            background: linear-gradient(to right, #ff0000, #cc0000);
+            color: white;
+        }
+        
+        .popup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .popup-footer {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--hacker-red);
+            transform: scale(1.2);
+        }
+        
+        .countdown {
+            position: absolute;
+            top: 15px;
+            right: 50px;
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Floating WhatsApp Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(to bottom right, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            font-size: 0.9rem;
+        }
+        
+        .developer {
+            color: var(--hacker-red);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            margin-top: 10px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .time-display {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup-buttons {
+                flex-direction: column;
+            }
+            
+            .popup-btn {
+                width: 100%;
+            }
+            
+            .floating-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Rest of your HTML content remains the same -->
-  <div class="digital-clock" id="digitalClock"></div>
-
-  <div class="menu-bar">
-    <div class="menu-items">
-      <div class="menu-item" onclick="scrollToTop()">HOME</div>
-      <div class="menu-item" onclick="alert('About section coming soon')">ABOUT</div>
-      <div class="menu-item" onclick="alert('Contact information coming soon')">CONTACT</div>
-      <div class="subscribe-btn" onclick="window.open('https://youtube.com/@professorx42?si=o39CWKVArDn1cu1h', '_blank')">
-        <i class="fab fa-youtube subscribe-icon"></i> SUBSCRIBE
-      </div>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-canvas"></canvas>
+    
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">PROFESSOR X MODE</h1>
+        <p class="subtitle">HACKER TOOLS COLLECTION</p>
+    </header>
+    
+    <!-- Time Display -->
+    <div class="time-display">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">MONDAY, JANUARY 01, 2023</div>
     </div>
-  </div>
+    
+    <!-- Tools Grid -->
+    <div class="tools-grid">
+        <div class="tool-card" data-link="https://minahilsimdata.online/bulksearch.php">
+            <i class="fas fa-sim-card tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">SIM DATA</h3>
+            <p class="tool-desc">Check SIM card information</p>
+        </div>
+        
+        <div class="tool-card" data-link="https://professor-x7878.github.io/cnic-generator/">
+            <i class="fas fa-id-card tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">FAKE CNIC</h3>
+            <p class="tool-desc">Generate fake CNIC for testing</p>
+        </div>
+        
+        <div class="tool-card" data-link="#">
+            <i class="fas fa-mobile-alt tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">MOBILE RESTORE</h3>
+            <p class="tool-desc">Mobile device restore tools</p>
+        </div>
+        
+        <div class="tool-card" data-link="https://nadradata.xyz/app/sim.php">
+            <i class="fas fa-id-card tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">CNIC INFO</h3>
+            <p class="tool-desc">CNIC information lookup</p>
+        </div>
+        
+        <div class="tool-card" data-link="https://professor-x7878.github.io/Cardsmart/">
+            <i class="fas fa-building tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">SMART CARD</h3>
+            <p class="tool-desc">Smart card generator tool</p>
+        </div>
+        
+        <div class="tool-card" data-link="#">
+            <i class="fas fa-wrench tool-icon"></i>
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h3 class="tool-name">TOOL 6</h3>
+            <p class="tool-desc">Additional tool coming soon</p>
+        </div>
+    </div>
+    
+    <!-- WhatsApp Popup -->
+    <div class="popup-overlay" id="whatsappPopup">
+        <div class="whatsapp-popup">
+            <span class="close-btn" id="closePopupBtn">&times;</span>
+            <div class="countdown" id="countdown">10</div>
+            
+            <div class="popup-header">
+                <i class="fab fa-whatsapp whatsapp-icon"></i>
+                <h2 class="popup-title">JOIN OUR CHANNEL</h2>
+            </div>
+            
+            <div class="popup-body">
+                <div class="popup-message" id="popupMessage">
+                    Get exclusive updates directly to your WhatsApp!
+                </div>
+                
+                <div class="popup-buttons">
+                    <a href="https://whatsapp.com/channel/0029VbBfFIo8KMqfwcftvp0Y" target="_blank" class="popup-btn whatsapp-btn" onclick="cancelAutoClose()">
+                        <i class="fab fa-whatsapp"></i> Join Now
+                    </a>
+                    
+                    <a href="https://youtube.com/@professorx42?si=o39CWKVArDn1cu1h" target="_blank" class="popup-btn youtube-btn" onclick="cancelAutoClose()">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                </div>
+            </div>
+            
+            <div class="popup-footer">
+                <div class="social-links">
+                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating WhatsApp Button -->
+    <div class="floating-btn" onclick="showPopup()">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>COPYRIGHT © 2023 PROFESSOR X MODE</p>
+        <p class="developer">Developed with ❤️ by PRINCE KHAN</p>
+    </footer>
+    
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "01";
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 33);
+        
+        // Update Time and Date
+        function updateTime() {
+            const now = new Date();
+            
+            // Time
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // Date
+            const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            const dayName = days[now.getDay()];
+            const monthName = months[now.getMonth()];
+            const date = now.getDate();
+            const year = now.getFullYear();
+            document.getElementById('date').textContent = `${dayName}, ${monthName} ${date}, ${year}`;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // Popup Functions
+        let autoCloseTimeout;
+        let countdownInterval;
+        const countdownTime = 10; // seconds
 
-  <div class="button-container">
-    <button class="fancy-btn" onclick="window.open('https://minahilsimdata.online/bulksearch.php', '_blank')" 
-            title="Check SIM card information" aria-label="SIM Data Information">
-      <i class="fas fa-sim-card btn-icon"></i>
-      <span>SIM DATA</span>
-    </button>
-    <button class="fancy-btn" onclick="window.open('https://professor-x7878.github.io/cnic-generator/', '_blank')" 
-            title="Generate fake CNIC for testing" aria-label="Fake CNIC Generator">
-      <i class="fas fa-id-card btn-icon"></i>
-      <span>FAKE CNIC</span>
-    </button>
-    <button class="fancy-btn" onclick="alert('Mobile restore feature coming soon')" 
-            title="Mobile device restore tools" aria-label="Mobile Restore Tools">
-      <i class="fas fa-mobile-alt btn-icon"></i>
-      <span>MOBILE RESTORE</span>
-    </button>
-    <button class="fancy-btn" onclick="window.open('https://nadradata.xyz/app/sim.php', '_blank')" 
-            title="CNIC information lookup" aria-label="CNIC Information">
-      <i class="fas fa-id-card btn-icon"></i>
-      <span>CNIC INFO</span>
-    </button>
-    <button class="fancy-btn" onclick="window.open('https://professor-x7878.github.io/Cardsmart/', '_blank')" 
-            title="Generate fake CNIC for testing" aria-label="Jazz Franchise Info">
-      <i class="fas fa-building btn-icon"></i>
-      <span> SMART CARD GERNETOR</span>
-    </button>
-    <button class="fancy-btn" onclick="alert('New tool coming soon')" 
-            title="Additional tool coming soon" aria-label="Coming Soon Tool">
-      <i class="fas fa-wrench btn-icon"></i>
-      <span>TOOL 6</span>
-    </button>
-  </div>
+        function showPopup() {
+            document.getElementById('whatsappPopup').style.display = 'flex';
+            
+            // Start countdown
+            let secondsLeft = countdownTime;
+            document.getElementById('countdown').textContent = secondsLeft;
+            
+            countdownInterval = setInterval(function() {
+                secondsLeft--;
+                document.getElementById('countdown').textContent = secondsLeft;
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    closePopup();
+                }
+            }, 1000);
+            
+            // Set auto-close timeout
+            autoCloseTimeout = setTimeout(function() {
+                closePopup();
+            }, countdownTime * 1000);
+            
+            // Change messages periodically
+            const messages = [
+                "Get exclusive updates directly to your WhatsApp!",
+                "Join our community for latest tools and tips!",
+                "Be the first to know about new releases!",
+                "Daily tech hacks and tutorials await you!"
+            ];
+            
+            let currentMessage = 0;
+            const messageElement = document.getElementById('popupMessage');
+            
+            function changeMessage() {
+                messageElement.textContent = messages[currentMessage];
+                currentMessage = (currentMessage + 1) % messages.length;
+            }
+            
+            // Initial message
+            changeMessage();
+            // Change message every 3 seconds
+            setInterval(changeMessage, 3000);
+        }
+        
+        function cancelAutoClose() {
+            clearTimeout(autoCloseTimeout);
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').textContent = "✓";
+            document.getElementById('countdown').style.animation = "none";
+            document.getElementById('countdown').style.backgroundColor = "rgba(0, 255, 0, 0.5)";
+        }
+        
+        function closePopup() {
+            clearInterval(countdownInterval);
+            clearTimeout(autoCloseTimeout);
+            document.getElementById('whatsappPopup').style.display = 'none';
+        }
+        
+        // Close popup when clicking outside or on close button
+        document.getElementById('whatsappPopup').addEventListener('click', function(e) {
+            if (e.target === this || e.target.id === 'closePopupBtn') {
+                closePopup();
+            }
+        });
 
-  <a href="https://wa.me/923311212362" class="chat-icon" target="_blank" rel="noopener noreferrer" 
-     aria-label="Contact via WhatsApp" title="Chat with us on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+        // Tool button loading animations
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const link = this.getAttribute('data-link');
+                if (!link || link === '#') {
+                    alert('Coming soon!');
+                    return;
+                }
+                
+                // Show loading state
+                this.classList.add('loading');
+                
+                // Open link after short delay
+                setTimeout(() => {
+                    window.open(link, '_blank');
+                    
+                    // Remove loading state after another short delay
+                    setTimeout(() => {
+                        this.classList.remove('loading');
+                    }, 500);
+                }, 300);
+            });
+        });
 
-  <div class="footer">
-    <div>Copyright © 2023 Professor X Mode. All Rights Reserved.</div>
-    <div class="developer-name">Developed with ❤️ by PRINCE KHAN</div>
-  </div>
-
-  <script>
-    // Digital Clock Function
-    function updateDateTime() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-      const dayName = days[now.getDay()];
-      const monthName = months[now.getMonth()];
-      const date = now.getDate().toString().padStart(2, '0');
-      const year = now.getFullYear();
-      document.getElementById('digitalClock').textContent =
-        `${hours}:${minutes}:${seconds} | ${dayName} ${monthName} ${date} ${year}`;
-    }
-
-    // Scroll to top function
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-
-    // Initialize clock and update every second
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    // Add loading effect to buttons
-    document.querySelectorAll('.fancy-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-        setTimeout(() => {
-          this.innerHTML = `<i class="${this.querySelector('i').className.replace('fa-spinner fa-spin', this.dataset.originalIcon)}"></i> <span>${this.querySelector('span').textContent}</span>`;
-        }, 1500);
-      });
-      
-      // Store original icon class
-      button.dataset.originalIcon = button.querySelector('i').className.replace('btn-icon', '').trim();
-    });
-  </script>
+        // Show popup after 5 seconds
+        setTimeout(showPopup, 5000);
+        
+        // Resize canvas when window resizes
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
-</html>
+</html> 
