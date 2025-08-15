@@ -1,746 +1,749 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professor X Mode - Hacker Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --hacker-green: #0f0;
-            --hacker-red: #f00;
-            --dark-bg: #000;
-            --glow-effect: 0 0 10px #0f0;
-        }
-        
-        body {
-            font-family: 'Share Tech Mono', monospace;
-            background-color: var(--dark-bg);
-            color: var(--hacker-green);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-        
-        /* Matrix Rain Background */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.15;
-        }
-        
-        /* Header Section */
-        .header {
-            text-align: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--hacker-green);
-            box-shadow: var(--glow-effect);
-            position: relative;
-        }
-        
-        .header::before {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border: 2px solid var(--hacker-green);
-            border-radius: 5px;
-            animation: border-pulse 4s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes border-pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            margin: 0;
-            text-shadow: var(--glow-effect);
-            letter-spacing: 3px;
-        }
-        
-        .subtitle {
-            font-size: 1rem;
-            margin: 10px 0 0;
-            color: #aaa;
-        }
-        
-        /* Time Display */
-        .time-display {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        .time, .date {
-            background: rgba(0, 20, 0, 0.3);
-            padding: 15px 25px;
-            border: 1px solid var(--hacker-green);
-            border-radius: 5px;
-            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2), 0 0 15px rgba(0, 255, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .time::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(0, 255, 0, 0) 0%,
-                rgba(0, 255, 0, 0) 45%,
-                rgba(0, 255, 0, 0.3) 50%,
-                rgba(0, 255, 0, 0) 55%,
-                rgba(0, 255, 0, 0) 100%
-            );
-            transform: rotate(30deg);
-            animation: scanline 5s linear infinite;
-        }
-        
-        @keyframes scanline {
-            0% { transform: translateY(-100%) rotate(30deg); }
-            100% { transform: translateY(100%) rotate(30deg); }
-        }
-        
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .tool-card {
-            background: rgba(0, 10, 0, 0.2);
-            border: 1px solid var(--hacker-green);
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
-            background: rgba(0, 30, 0, 0.3);
-        }
-        
-        .tool-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 255, 0, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-        
-        .tool-card:hover::before {
-            left: 100%;
-        }
-        
-        .tool-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--hacker-green);
-            text-shadow: var(--glow-effect);
-            transition: all 0.3s;
-        }
-        
-        .loading-spinner {
-            display: none;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            animation: spin 1s linear infinite;
-            color: var(--hacker-green);
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .tool-card.loading .tool-icon {
-            display: none;
-        }
-        
-        .tool-card.loading .loading-spinner {
-            display: block;
-        }
-        
-        .tool-card.loading .tool-name {
-            color: #aaa;
-        }
-        
-        .tool-name {
-            font-size: 1.2rem;
-            margin: 10px 0;
-        }
-        
-        .tool-desc {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-        
-        /* WhatsApp Popup */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .whatsapp-popup {
-            background: linear-gradient(135deg, #075e54 0%, #128c7e 50%, #25d366 100%);
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            animation: popup-entrance 0.4s ease-out;
-        }
-        
-        @keyframes popup-entrance {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        
-        .popup-header {
-            padding: 25px;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        
-        .popup-header::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .whatsapp-icon {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            animation: icon-pulse 2s infinite;
-        }
-        
-        @keyframes icon-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .popup-title {
-            font-size: 1.8rem;
-            margin: 0;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        
-        .popup-body {
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .popup-message {
-            font-size: 1.1rem;
-            color: white;
-            margin-bottom: 25px;
-            min-height: 60px;
-        }
-        
-        .popup-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .popup-btn {
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            transition: all 0.3s;
-            min-width: 180px;
-            justify-content: center;
-        }
-        
-        .whatsapp-btn {
-            background: linear-gradient(to right, #25d366, #128c7e);
-            color: white;
-        }
-        
-        .youtube-btn {
-            background: linear-gradient(to right, #ff0000, #cc0000);
-            color: white;
-        }
-        
-        .popup-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .popup-footer {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .close-btn:hover {
-            color: var(--hacker-red);
-            transform: scale(1.2);
-        }
-        
-        .countdown {
-            position: absolute;
-            top: 15px;
-            right: 50px;
-            width: 25px;
-            height: 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: white;
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        /* Floating WhatsApp Button */
-        .floating-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(to bottom right, #25d366, #128c7e);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            z-index: 100;
-            animation: float 3s ease-in-out infinite;
-            transition: all 0.3s;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .floating-btn:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Footer */
-        .footer {
-            margin-top: auto;
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
-            font-size: 0.9rem;
-        }
-        
-        .developer {
-            color: var(--hacker-red);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-            margin-top: 10px;
-        }
-        
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .title {
-                font-size: 2rem;
-            }
-            
-            .time-display {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .popup-buttons {
-                flex-direction: column;
-            }
-            
-            .popup-btn {
-                width: 100%;
-            }
-            
-            .floating-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 1.8rem;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Professional Hacker Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-hover: rgba(248, 249, 250, 0.98);
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --text-color: #333333;
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --danger: #dc3545;
+  --warning: #fd7e14;
+  --success: #28a745;
+  --border: #dee2e6;
+  --tiktok-pink: #FE2C55;
+  --tiktok-black: #010101;
+  --whatsapp-green: #25D366;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  background: var(--primary-bg);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+  touch-action: pan-y;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: var(--secondary-bg);
+  box-shadow: 0 2px 10px var(--card-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+.notification {
+  position: relative;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: transform 0.2s ease;
+}
+
+.notification:hover {
+  transform: scale(1.1);
+}
+
+.notification .badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: var(--danger);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+
+main {
+  padding: 20px;
+}
+
+.alert-container {
+  margin-bottom: 20px;
+}
+
+.alert-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(220, 53, 69, 0.08);
+  border-left: 3px solid var(--danger);
+  padding: 12px 15px;
+  border-radius: 0 5px 5px 0;
+  margin-bottom: 10px;
+}
+
+.alert-icon {
+  color: var(--danger);
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.alert-text {
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.bill-notification {
+  display: flex;
+  align-items: center;
+  background: rgba(253, 126, 20, 0.1);
+  border-left: 3px solid var(--warning);
+  padding: 12px 15px;
+  border-radius: 0 5px 5px 0;
+}
+
+.bill-icon {
+  color: var(--warning);
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.bill-text {
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: var(--card-hover);
+}
+
+.card i {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+  color: var(--accent);
+  transition: all 0.3s ease;
+}
+
+.card:hover i {
+  transform: scale(1.15);
+  color: var(--accent-light);
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.card:hover p {
+  color: var(--accent);
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font-size: 0.75rem;
+  color: #6c757d;
+  background: var(--secondary-bg);
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+}
+
+/* Service Pages Styles */
+.service-page {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.service-header h2 {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.service-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+}
+
+.service-title {
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.service-title i {
+  margin-right: 10px;
+}
+
+.service-price {
+  background: var(--accent);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.service-list {
+  margin-top: 10px;
+}
+
+.service-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.service-list-item i {
+  margin-right: 8px;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.whatsapp-btn {
+  display: inline-block;
+  background: var(--whatsapp-green);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+}
+
+.whatsapp-btn i {
+  margin-right: 8px;
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: var(--whatsapp-green);
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  background: #128C7E;
+  transform: scale(1.1);
+}
+
+.whatsapp-tooltip {
+  visibility: hidden;
+  width: 160px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  right: 70px;
+  bottom: 15px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.8rem;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+  visibility: visible;
+  opacity: 0.9;
+}
+
+/* Disable zooming */
+html {
+  touch-action: manipulation;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 30px;
+    right: 20px;
+    font-size: 25px;
+  }
+  
+  .whatsapp-tooltip {
+    width: 140px;
+    right: 60px;
+    font-size: 0.7rem;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+  }
+  
+  .card {
+    padding: 15px 10px;
+  }
+  
+  .card i {
+    font-size: 2.2rem;
+  }
+  
+  .card p {
+    font-size: 0.8rem;
+  }
+  
+  .alert-text, .bill-text {
+    font-size: 0.78rem;
+  }
+}
+
+/* Animation for cards */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: cardEntrance 0.5s ease-out;
+  animation-fill-mode: backwards;
+}
+
+/* Delay animations for each card */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+.card:nth-child(7) { animation-delay: 0.7s; }
+</style>
 </head>
 <body>
-    <!-- Matrix Rain Background -->
-    <canvas id="matrix-canvas"></canvas>
-    
-    <!-- Header -->
-    <header class="header">
-        <h1 class="title">PROFESSOR X MODE</h1>
-        <p class="subtitle">HACKER TOOLS COLLECTION</p>
-    </header>
-    
-    <!-- Time Display -->
-    <div class="time-display">
-        <div class="time" id="time">00:00:00</div>
-        <div class="date" id="date">MONDAY, JANUARY 01, 2023</div>
-    </div>
-    
-    <!-- Tools Grid -->
-    <div class="tools-grid">
-        <div class="tool-card" data-link="https://minahilsimdata.online/bulksearch.php">
-            <i class="fas fa-sim-card tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">SIM DATA</h3>
-            <p class="tool-desc">Check SIM card information</p>
-        </div>
-        
-        <div class="tool-card" data-link="https://professor-x7878.github.io/cnic-generator/">
-            <i class="fas fa-id-card tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">FAKE CNIC</h3>
-            <p class="tool-desc">Generate fake CNIC for testing</p>
-        </div>
-        
-        <div class="tool-card" data-link="#">
-            <i class="fas fa-mobile-alt tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">MOBILE RESTORE</h3>
-            <p class="tool-desc">Mobile device restore tools</p>
-        </div>
-        
-        <div class="tool-card" data-link="https://nadradata.xyz/app/sim.php">
-            <i class="fas fa-id-card tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">CNIC INFO</h3>
-            <p class="tool-desc">CNIC information lookup</p>
-        </div>
-        
-        <div class="tool-card" data-link="https://professor-x7878.github.io/Cardsmart/">
-            <i class="fas fa-building tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">SMART CARD</h3>
-            <p class="tool-desc">Smart card generator tool</p>
-        </div>
-        
-        <div class="tool-card" data-link="#">
-            <i class="fas fa-wrench tool-icon"></i>
-            <i class="fas fa-spinner loading-spinner"></i>
-            <h3 class="tool-name">TOOL 6</h3>
-            <p class="tool-desc">Additional tool coming soon</p>
-        </div>
-    </div>
-    
-    <!-- WhatsApp Popup -->
-    <div class="popup-overlay" id="whatsappPopup">
-        <div class="whatsapp-popup">
-            <span class="close-btn" id="closePopupBtn">&times;</span>
-            <div class="countdown" id="countdown">10</div>
-            
-            <div class="popup-header">
-                <i class="fab fa-whatsapp whatsapp-icon"></i>
-                <h2 class="popup-title">JOIN OUR CHANNEL</h2>
-            </div>
-            
-            <div class="popup-body">
-                <div class="popup-message" id="popupMessage">
-                    Get exclusive updates directly to your WhatsApp!
-                </div>
-                
-                <div class="popup-buttons">
-                    <a href="https://whatsapp.com/channel/0029VbBfFIo8KMqfwcftvp0Y" target="_blank" class="popup-btn whatsapp-btn" onclick="cancelAutoClose()">
-                        <i class="fab fa-whatsapp"></i> Join Now
-                    </a>
-                    
-                    <a href="https://youtube.com/@professorx42?si=o39CWKVArDn1cu1h" target="_blank" class="popup-btn youtube-btn" onclick="cancelAutoClose()">
-                        <i class="fab fa-youtube"></i> YouTube
-                    </a>
-                </div>
-            </div>
-            
-            <div class="popup-footer">
-                <div class="social-links">
-                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-telegram"></i></a>
-                    <a href="#" class="social-link" onclick="cancelAutoClose()"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Floating WhatsApp Button -->
-    <div class="floating-btn" onclick="showPopup()">
-        <i class="fab fa-whatsapp"></i>
-    </div>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <p>COPYRIGHT © 2023 PROFESSOR X MODE</p>
-        <p class="developer">Developed with ❤️ by PRINCE KHAN</p>
-    </footer>
-    
-    <script>
-        // Matrix Rain Effect
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const chars = "01";
-        const fontSize = 18;
-        const columns = canvas.width / fontSize;
-        
-        const drops = [];
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
-            
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                drops[i]++;
-            }
-        }
-        
-        setInterval(drawMatrix, 33);
-        
-        // Update Time and Date
-        function updateTime() {
-            const now = new Date();
-            
-            // Time
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            // Date
-            const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-            const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-            const dayName = days[now.getDay()];
-            const monthName = months[now.getMonth()];
-            const date = now.getDate();
-            const year = now.getFullYear();
-            document.getElementById('date').textContent = `${dayName}, ${monthName} ${date}, ${year}`;
-        }
-        
-        setInterval(updateTime, 1000);
-        updateTime();
-        
-        // Popup Functions
-        let autoCloseTimeout;
-        let countdownInterval;
-        const countdownTime = 10; // seconds
 
-        function showPopup() {
-            document.getElementById('whatsappPopup').style.display = 'flex';
-            
-            // Start countdown
-            let secondsLeft = countdownTime;
-            document.getElementById('countdown').textContent = secondsLeft;
-            
-            countdownInterval = setInterval(function() {
-                secondsLeft--;
-                document.getElementById('countdown').textContent = secondsLeft;
-                
-                if (secondsLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    closePopup();
-                }
-            }, 1000);
-            
-            // Set auto-close timeout
-            autoCloseTimeout = setTimeout(function() {
-                closePopup();
-            }, countdownTime * 1000);
-            
-            // Change messages periodically
-            const messages = [
-                "Get exclusive updates directly to your WhatsApp!",
-                "Join our community for latest tools and tips!",
-                "Be the first to know about new releases!",
-                "Daily tech hacks and tutorials await you!"
-            ];
-            
-            let currentMessage = 0;
-            const messageElement = document.getElementById('popupMessage');
-            
-            function changeMessage() {
-                messageElement.textContent = messages[currentMessage];
-                currentMessage = (currentMessage + 1) % messages.length;
-            }
-            
-            // Initial message
-            changeMessage();
-            // Change message every 3 seconds
-            setInterval(changeMessage, 3000);
-        }
-        
-        function cancelAutoClose() {
-            clearTimeout(autoCloseTimeout);
-            clearInterval(countdownInterval);
-            document.getElementById('countdown').textContent = "✓";
-            document.getElementById('countdown').style.animation = "none";
-            document.getElementById('countdown').style.backgroundColor = "rgba(0, 255, 0, 0.5)";
-        }
-        
-        function closePopup() {
-            clearInterval(countdownInterval);
-            clearTimeout(autoCloseTimeout);
-            document.getElementById('whatsappPopup').style.display = 'none';
-        }
-        
-        // Close popup when clicking outside or on close button
-        document.getElementById('whatsappPopup').addEventListener('click', function(e) {
-            if (e.target === this || e.target.id === 'closePopupBtn') {
-                closePopup();
-            }
-        });
+<header>
+  <h1>HACKER TOOLS</h1>
+  <div class="notification">
+    <i class="fas fa-bell"></i>
+    <span class="badge" id="updateCount">2</span>
+  </div>
+</header>
 
-        // Tool button loading animations
-        document.querySelectorAll('.tool-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const link = this.getAttribute('data-link');
-                if (!link || link === '#') {
-                    alert('Coming soon!');
-                    return;
-                }
-                
-                // Show loading state
-                this.classList.add('loading');
-                
-                // Open link after short delay
-                setTimeout(() => {
-                    window.open(link, '_blank');
-                    
-                    // Remove loading state after another short delay
-                    setTimeout(() => {
-                        this.classList.remove('loading');
-                    }, 500);
-                }, 300);
-            });
-        });
+<main>
+  <div class="alert-container">
+    <div class="alert-bar">
+      <i class="fas fa-exclamation-triangle alert-icon"></i>
+      <div class="alert-text">
+        Security Update Required: New vulnerabilities patched in v2.5.2
+      </div>
+    </div>
+    <div class="bill-notification">
+      <i class="fas fa-file-invoice-dollar bill-icon"></i>
+      <div class="bill-text">
+        Subscription Renewal Due: 3 days remaining
+      </div>
+    </div>
+  </div>
 
-        // Show popup after 5 seconds
-        setTimeout(showPopup, 5000);
-        
-        // Resize canvas when window resizes
-        window.addEventListener('resize', function() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
+  <div class="grid">
+    <a href="https://minahilsimdata.online/bulksearch.php" class="card" target="_blank">
+      <i class="fas fa-sim-card"></i>
+      <p>SIM Data Name</p>
+    </a>
+    <a href="https://nadradata.xyz/app/sim.php" class="card" target="_blank">
+      <i class="fas fa-id-card"></i>
+      <p>CNIC Info</p>
+    </a>
+    <a href="https://professor-x7878.github.io/cnic-generator/" class="card" target="_blank">
+      <i class="fas fa-language"></i>
+      <p>Urdu CNIC Generator</p>
+    </a>
+    <a href="https://professor-x7878.github.io/Cardsmart/" class="card" target="_blank">
+      <i class="fas fa-id-card-alt"></i>
+      <p>Smart Card CNIC Generator</p>
+    </a>
+    <div class="card" id="tiktok-btn">
+      <i class="fab fa-tiktok"></i>
+      <p>TikTok Original Like View</p>
+    </div>
+    <div class="card" id="sim-block-btn">
+      <i class="fas fa-ban"></i>
+      <p>Telenor SIM Block</p>
+    </div>
+    <div class="card" id="all-services-btn">
+      <i class="fas fa-tools"></i>
+      <p>All Services</p>
+    </div>
+  </div>
+</main>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/923311212362" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-tooltip">Chat on WhatsApp: 03311212362</span>
+</a>
+
+<!-- TikTok Services Page -->
+<div id="tiktok-services" class="service-page">
+  <div class="service-header">
+    <h2>TikTok Services</h2>
+    <button class="close-btn" id="close-tiktok">&times;</button>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-heart"></i> Original Likes
+    </div>
+    <p>High-quality, authentic likes from real TikTok accounts that won't get flagged by the algorithm.</p>
+    <div class="service-price">4,200 likes - Rs. 3,000</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-eye"></i> Genuine Views
+    </div>
+    <p>Real views from active TikTok users that will boost your video's ranking in the algorithm.</p>
+    <div class="service-price">10,000 views - Rs. 2,500</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-share"></i> Organic Shares
+    </div>
+    <p>Real users sharing your content to increase your reach and visibility on the platform.</p>
+    <div class="service-price">500 shares - Rs. 1,800</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-user-plus"></i> Targeted Followers
+    </div>
+    <p>Real, active followers in your niche to grow your audience organically.</p>
+    <div class="service-price">1,000 followers - Rs. 2,200</div>
+  </div>
+</div>
+
+<!-- SIM Block Services Page -->
+<div id="sim-block-services" class="service-page">
+  <div class="service-header">
+    <h2>SIM Block Services</h2>
+    <button class="close-btn" id="close-sim-block">&times;</button>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-sim-card"></i> Telenor SIM Block
+    </div>
+    <p>Permanent blocking of any Telenor SIM card. Immediate effect after payment confirmation.</p>
+    <div class="service-price">Rs. 1,500</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-sim-card"></i> Jazz SIM Block
+    </div>
+    <p>Complete blocking of Jazz SIM cards with verification of successful block.</p>
+    <div class="service-price">Rs. 2,000</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-sim-card"></i> Zong SIM Block
+    </div>
+    <p>Permanent blocking service for Zong SIM cards with confirmation report.</p>
+    <div class="service-price">Rs. 2,000</div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-sim-card"></i> Ufone SIM Block
+    </div>
+    <p>Complete blocking of Ufone SIM cards with verification proof.</p>
+    <div class="service-price">Rs. 2,000</div>
+  </div>
+
+  <a href="https://wa.me/923311212362" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+  </a>
+</div>
+
+<!-- All Services Page -->
+<div id="all-services" class="service-page">
+  <div class="service-header">
+    <h2>All Available Services</h2>
+    <button class="close-btn" id="close-all-services">&times;</button>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-network-wired"></i> All Network CDR Available
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> Jazz CDR</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Telenor CDR</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Zong CDR</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Ufone CDR</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-map-marker-alt"></i> All Network SIM Location
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> Jazz Pinpoint</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Telenor Pinpoint</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Zong Pinpoint</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Ufone Pinpoint</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-sim-card"></i> All Network SIM Data
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> Jazz SIM Data</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Ufone SIM Data</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Zong SIM Data</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Telenor SIM Data</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> SCOM SIM Data</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-id-card"></i> NADRA Services Available
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC Copy</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC Pic</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Family Tree with Picture</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC to All Family Record</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> By Birth / By Marriage Records</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC to Birth Certificate</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC to Death Certificate</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> CNIC to Marriage Certificate</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-id-card"></i> Fake Drive License Available
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> Punjab Drive License</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Islamabad</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Khyber Pakhtoon Kwa</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Balochistan</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> LTV / HTV / PVC</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-car"></i> Car Black Tanat Services
+    </div>
+    <div class="service-list">
+      <div class="service-list-item"><i class="fas fa-check"></i> Black Glass Format</div>
+      <div class="service-list-item"><i class="fas fa-check"></i> Blue Light Format</div>
+    </div>
+  </div>
+  
+  <div class="service-card">
+    <div class="service-title">
+      <i class="fas fa-boxes"></i> SIM Stock Available
+    </div>
+    <p>Various SIM cards available for all networks</p>
+  </div>
+
+  <a href="https://wa.me/923311212362" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+  </a>
+</div>
+
+<div class="status-bar">
+  <span>STATUS: <span style="color: var(--accent)">ACTIVE</span></span>
+  <span>v2.5.1</span>
+  <span><i class="fas fa-lock"></i> SECURE CONNECTION</span>
+</div>
+
+<script>
+// Disable pinch zoom
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+// Disable double tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// Simple update counter
+let updateCount = 2;
+setInterval(() => {
+  updateCount = Math.min(updateCount + 1, 5);
+  document.getElementById("updateCount").textContent = updateCount;
+}, 30000);
+
+// Enhanced click effects
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', function() {
+    if(!this.href) { // Only animate if it's not a link card
+      this.style.transform = 'translateY(-5px) scale(0.98)';
+      this.style.boxShadow = '0 12px 25px rgba(0, 0, 0, 0.15)';
+      setTimeout(() => {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+      }, 200);
+    }
+  });
+});
+
+// Service Pages Toggle
+const tiktokBtn = document.getElementById('tiktok-btn');
+const tiktokServices = document.getElementById('tiktok-services');
+const closeTiktok = document.getElementById('close-tiktok');
+
+const simBlockBtn = document.getElementById('sim-block-btn');
+const simBlockServices = document.getElementById('sim-block-services');
+const closeSimBlock = document.getElementById('close-sim-block');
+
+const allServicesBtn = document.getElementById('all-services-btn');
+const allServices = document.getElementById('all-services');
+const closeAllServices = document.getElementById('close-all-services');
+
+tiktokBtn.addEventListener('click', function() {
+  tiktokServices.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+});
+
+closeTiktok.addEventListener('click', function() {
+  tiktokServices.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+simBlockBtn.addEventListener('click', function() {
+  simBlockServices.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+});
+
+closeSimBlock.addEventListener('click', function() {
+  simBlockServices.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+allServicesBtn.addEventListener('click', function() {
+  allServices.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+});
+
+closeAllServices.addEventListener('click', function() {
+  allServices.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+</script>
+
 </body>
-</html> 
+</html>
